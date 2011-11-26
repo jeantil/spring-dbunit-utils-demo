@@ -1,0 +1,6 @@
+<persistence>
+    <persistence-unit name="pdbunit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <!-- ${hbm2ddl} -->
+    </persistence-unit>
+</persistence>
