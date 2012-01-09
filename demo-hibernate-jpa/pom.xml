@@ -5,10 +5,13 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <parent>
     <groupId>eu.byjean</groupId>
     <artifactId>spring-dbunit-utils-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    </parent>
+    <groupId>eu.byjean</groupId>
+    <artifactId>demo-hibernate-jpa</artifactId>
     <properties>
         <!-- project conf -->
         <java.version>1.5</java.version>
@@ -24,11 +27,6 @@
         <spring-dbunit-test-hibernatejpa.version>1.0.0-SNAPSHOT</spring-dbunit-test-hibernatejpa.version>
         <hsqldb.version>2.2.7</hsqldb.version>
     </properties>
-
-    <modules>
-        <module>demo-hibernate-jpa</module>
-    </modules>
-
     <dependencyManagement>
         <dependencies>
              <dependency>
@@ -71,6 +69,37 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.excilys.ebi.spring-dbunit</groupId>
+            <artifactId>spring-dbunit-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.byjean</groupId>
+            <artifactId>spring-dbunit-test-hibernatejpa</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

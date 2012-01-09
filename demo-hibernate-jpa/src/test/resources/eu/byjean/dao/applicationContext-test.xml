@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <context:component-scan base-package="eu.byjean"/>
+
+    <context:property-placeholder location="eu/byjean/dao/test-hsqldb.properties"/>
+
+    <bean id="dataSource" class="eu.byjean.test.utils.parallel.jdbc.datasource.ThreadUniqueDriverManagerDataSource">
+        <property name="driverClassName" value="${ds.driver}"/>
+        <property name="url" value="${ds.url}"/>
+        <property name="username" value="${ds.username}"/>
+        <property name="password" value="${ds.password}"/>
+    </bean>
+
+    <bean id="jpaVendorAdapter" class="eu.byjean.test.utils.parallel.jpa.hibernate.HibernateJpaVendorParallelAdapter">
+        <property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
+    </bean>
+
+    <!-- This file stays the same for run and test  -->
+    <tx:annotation-driven/>
+
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="pdbunit"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+            </props>
+        </property>
+    </bean>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf"/>
+    </bean>
+
+    <context:annotation-config/>
+</beans>

@@ -1,0 +1,3 @@
+<persistence>
+    <persistence-unit name="pdbunit" transaction-type="RESOURCE_LOCAL"/>
+</persistence>
